@@ -62,7 +62,6 @@ describe("Gilded Rose exceptions", function () {
     new Item("Backstage passes to a TAFKAL80ETC concert", 5, 40),
     new Item("Backstage passes to a TAFKAL80ETC concert", 0, 60),
     new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
-
   ];
   let gildedRose = new Shop();
 
@@ -72,67 +71,119 @@ describe("Gilded Rose exceptions", function () {
     gildedRose = new Shop(items);
   });
 
-  it("Aged Brie increase in quality", function () { 
+  it("Aged Brie increase in quality", function () {
     for (let day = 0; day < 5; day++) {
       items = gildedRose.updateQuality();
-    }   
+    }
     expect(items[0].name).toBe("Aged Brie");
     expect(items[0].sellIn).toBe(-3);
     expect(items[0].quality).toBe(8); // 2 + 3*2
   });
 
-  it("Aged Brie quality can not be above 50", function () { 
+  it("Aged Brie quality can not be above 50", function () {
     for (let day = 0; day < 30; day++) {
       items = gildedRose.updateQuality();
-    }   
+    }
     expect(items[0].name).toBe("Aged Brie");
     expect(items[0].sellIn).toBe(-28);
     expect(items[0].quality).toBe(50);
   });
 
-  
-  it("Sulfuras is indeteriorable", function () { 
+  it("Sulfuras is indeteriorable", function () {
     for (let day = 0; day < 50; day++) {
       items = gildedRose.updateQuality();
-    }   
+    }
     expect(items[1].name).toBe("Sulfuras, Hand of Ragnaros");
     expect(items[1].sellIn).toBe(0);
     expect(items[1].quality).toBe(80);
   });
- 
-  it("Backstage passes quality increase", function () { 
+
+  it("Backstage passes quality increase", function () {
     items = gildedRose.updateQuality();
     expect(items[2].name).toBe("Backstage passes to a TAFKAL80ETC concert");
     expect(items[2].sellIn).toBe(14);
     expect(items[2].quality).toBe(21);
   });
 
-  it("Backstage passes quality increase rapidly", function () { 
+  it("Backstage passes quality increase rapidly", function () {
     items = gildedRose.updateQuality();
     expect(items[3].name).toBe("Backstage passes to a TAFKAL80ETC concert");
     expect(items[3].sellIn).toBe(9);
     expect(items[3].quality).toBe(42);
   });
 
-  it("Backstage passes quality increase rapidly (+3)", function () { 
+  it("Backstage passes quality increase rapidly (+3)", function () {
     items = gildedRose.updateQuality();
     expect(items[4].name).toBe("Backstage passes to a TAFKAL80ETC concert");
     expect(items[4].sellIn).toBe(4);
     expect(items[4].quality).toBe(43);
   });
 
-  it("Backstage passes quality fall to 0", function () { 
+  it("Backstage passes quality fall to 0", function () {
     items = gildedRose.updateQuality();
     expect(items[5].name).toBe("Backstage passes to a TAFKAL80ETC concert");
     expect(items[5].sellIn).toBe(-1);
     expect(items[5].quality).toBe(0);
   });
 
-  it("Backstage passes quality not above 50", function () { 
+  it("Backstage passes quality not above 50", function () {
     items = gildedRose.updateQuality();
     expect(items[6].name).toBe("Backstage passes to a TAFKAL80ETC concert");
     expect(items[6].sellIn).toBe(4);
     expect(items[6].quality).toBe(50);
+  });
+});
+
+xdescribe("Gilded Rose Conjured items", function () {
+  let gildedRose = new Shop();
+
+  beforeEach(() => {
+    let items = [
+      new Item("Conjured item", 10, 20),
+      new Item("Conjured item", 5, 40),
+    ];
+    gildedRose = new Shop(items);
+  });
+
+  it("test premier, initialisation of a Conjured Item", function () {
+    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].sellIn).toBe(10);
+    expect(items[0].quality).toBe(20);
+  });
+
+  it("day 1", function () {
+    items = gildedRose.updateQuality();
+    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].sellIn).toBe(9);
+    expect(items[0].quality).toBe(18);
+  });
+
+  it("day 5", function () {
+    for (let day = 0; day < 5; day++) {
+      items = gildedRose.updateQuality();
+    }
+    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].sellIn).toBe(5);
+    expect(items[0].quality).toBe(0);
+  });
+
+  it("day 6", function () {
+    for (let day = 0; day < 6; day++) {
+      items = gildedRose.updateQuality();
+    }
+    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].sellIn).toBe(4);
+    expect(items[0].quality).toBe(0);
+  });
+
+  // 5 day -2 and 5 day -2*2
+  it("day 10", function () {
+    for (let day = 0; day < 10; day++) {
+      items = gildedRose.updateQuality();
+    }
+    expect(items[1].name).toBe("Conjured item");
+    expect(items[1].sellIn).toBe(-5);
+    expect(items[1].quality).toBe(10);
   });
 });
 
