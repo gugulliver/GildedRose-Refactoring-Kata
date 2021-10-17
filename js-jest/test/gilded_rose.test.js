@@ -170,7 +170,6 @@ describe("Gilded Rose Conjured Items", function () {
     expect(items[0].quality).toBe(0);
   });
 
-  // 5 day -2 and 5 day -2*2
   it("day 10", function () {
     for (let day = 0; day < 10; day++) {
       items = gildedRose.updateQuality();
@@ -180,21 +179,3 @@ describe("Gilded Rose Conjured Items", function () {
     expect(items[1].quality).toBe(10);
   });
 });
-
-xdescribe("Gilded Rose error test", function () {
-  it("create basic item with negative values", function () {
-    // name, sellIn, quality
-    items = [new Item("basic item error", -5, -10)];
-    gildedRose = new Shop(items);
-    expect(items[0].name).toBe("basic item");
-    expect(items[0].sellIn).toBe(-5);
-    expect(items[0].quality).toBe(0);
-  });
-});
-
-/*
-
-- "Sulfuras", étant un objet légendaire, n'a pas de date de péremption et ne perd jamais en qualité (`quality`)
-- "Backstage passes", comme le "Aged Brie", augmente sa qualité (`quality`) plus le temps passe (`sellIn`) ; La qualité augmente de 2 quand il reste 10 jours ou moins et de 3 quand il reste 5 jours ou moins, mais la qualité tombe à 0 après le concert.
-
-*/
