@@ -134,35 +134,29 @@ describe("Gilded Rose exceptions", function () {
   });
 });
 
-xdescribe("Gilded Rose Conjured items", function () {
+describe("Gilded Rose Conjured Items", function () {
   let gildedRose = new Shop();
-
+  const conjuredItems = [
+    new Item("Conjured Item", 10, 10),
+    new Item("Conjured Item", 5, 40),
+  ];
   beforeEach(() => {
-    let items = [
-      new Item("Conjured item", 10, 20),
-      new Item("Conjured item", 5, 40),
-    ];
+    items = JSON.parse(JSON.stringify(conjuredItems));
     gildedRose = new Shop(items);
   });
 
-  it("test premier, initialisation of a Conjured Item", function () {
-    expect(items[0].name).toBe("Conjured item");
-    expect(items[0].sellIn).toBe(10);
-    expect(items[0].quality).toBe(20);
-  });
-
   it("day 1", function () {
-    items = gildedRose.updateQuality();
-    expect(items[0].name).toBe("Conjured item");
+   items = gildedRose.updateQuality();
+    expect(items[0].name).toBe("Conjured Item");
     expect(items[0].sellIn).toBe(9);
-    expect(items[0].quality).toBe(18);
+    expect(items[0].quality).toBe(8);
   });
 
   it("day 5", function () {
     for (let day = 0; day < 5; day++) {
       items = gildedRose.updateQuality();
     }
-    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].name).toBe("Conjured Item");
     expect(items[0].sellIn).toBe(5);
     expect(items[0].quality).toBe(0);
   });
@@ -171,7 +165,7 @@ xdescribe("Gilded Rose Conjured items", function () {
     for (let day = 0; day < 6; day++) {
       items = gildedRose.updateQuality();
     }
-    expect(items[0].name).toBe("Conjured item");
+    expect(items[0].name).toBe("Conjured Item");
     expect(items[0].sellIn).toBe(4);
     expect(items[0].quality).toBe(0);
   });
@@ -181,7 +175,7 @@ xdescribe("Gilded Rose Conjured items", function () {
     for (let day = 0; day < 10; day++) {
       items = gildedRose.updateQuality();
     }
-    expect(items[1].name).toBe("Conjured item");
+    expect(items[1].name).toBe("Conjured Item");
     expect(items[1].sellIn).toBe(-5);
     expect(items[1].quality).toBe(10);
   });
